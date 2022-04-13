@@ -37,7 +37,7 @@ let pokemonList = [
         type: ['water']
     },
     {
-        name: 'Wartortle', 
+        name: 'Wartortle',
         height: 1,
         type: ['water']
     },
@@ -47,3 +47,12 @@ let pokemonList = [
         type: ['water']
     }
 ];
+
+//lists out pokemon with their heights, adds line breaks between, and highlights a big pokemon
+for (let i=0; i < pokemonList.length; i++){
+    if (pokemonList[i].height >= 2){
+        document.write(pokemonList[i].name + ' - Height: ' + pokemonList[i].height + 'm - Wow, that\'s big!' + "<br>");
+    } else {
+        document.write(pokemonList[i].name + ' - Height: ' + pokemonList[i].height + 'm ' + "<br>");
+    }
+}
