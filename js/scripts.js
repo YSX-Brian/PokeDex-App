@@ -52,6 +52,8 @@ let pokemonRepository = (function () {
     function add(pokemon) {
         if (typeof pokemon === 'object' && 'name' in pokemon && 'height' in pokemon && 'type' in pokemon) {
             pokemonList.push(pokemon);
+        } else {
+            console.log('Incorrect entry format.');
         }
     }
 
@@ -59,9 +61,27 @@ let pokemonRepository = (function () {
         return pokemonList;
     }
 
+    function addListItem(pokemon) {
+        let pokeList = document.querySelector('.pokemon-list');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+        button.innerText = pokemon.name;
+        button.classList.add('selection');
+        button.addEventListener('click', function() {
+            showDetails(pokemon);
+        });
+        listItem.appendChild(button);
+        pokeList.appendChild(listItem);
+    }
+
+    function showDetails(pokemon) {
+        console.log(pokemon);
+    }
+
     return {
         add: add,
-        getAll: getAll
+        getAll: getAll,
+        addListItem: addListItem
     };
 })();
 
@@ -71,9 +91,5 @@ let pokemonRepository = (function () {
 
 //lists out pokemon with their heights, adds line breaks between, and highlights a big pokemon
 pokemonRepository.getAll().forEach(function(pokemon) {
-    if (pokemon.height >= 2){
-        document.write(pokemon.name + ' - Height: ' + pokemon.height + 'm - Wow, that\'s big!' + "<br>");
-    } else {
-        document.write(pokemon.name + ' - Height: ' + pokemon.height + 'm ' + "<br>");
-    }
+    pokemonRepository.addListItem(pokemon);
 });
