@@ -27,6 +27,11 @@ ul {
     border: 1px solid black;
 }
 
+.selection:hover {
+    opacity: 0.6;
+    transition-duration: 0.3s;
+}
+
 @media all and (min-width: 800px) and (max-width: 1000px) {
 	.list {
         width: 45%;
