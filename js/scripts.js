@@ -36,9 +36,11 @@ let pokemonRepository = (function () {
     }
 
     function loadList() {
+        showLoadingMessage();
         return fetch(apiUrl).then(function (response) {
             return response.json();
         }).then(function (json) {
+            hideLoadingMessage();
             json.results.forEach(function (item) {
                 let pokemon = {
                     name: item.name,
@@ -47,21 +49,45 @@ let pokemonRepository = (function () {
                 add(pokemon);
             });
         }).catch(function (e) {
+            hideLoadingMessage();
             console.error(e);
         })
     }
 
     function loadDetails(item) {
+        showLoadingMessage();
         let url = item.detailsUrl;
         return fetch(url).then(function (response) {
+            hideLoadingMessage();
             return response.json();
         }).then(function (details) {
             item.imageUrl = details.sprites.front_default;
             item.height = details.height;
             item.types = details.types;
         }).catch(function (e) {
+            hideLoadingMessage();
             console.error(e);
         });
+    }
+
+    // function showLoadingMessage() {
+    //     let loading = document.querySelector('.loading');
+    //     let message = document.createElement('h2')
+    //     message.innerText = 'Loading...';
+    //     loading.appendChild(message);
+    // }
+
+    function showLoadingMessage() {
+        let loading = document.querySelector('.loading');
+        let message = document.createElement('h2')
+        message.innerText = 'Loading...';
+        message.classList.add('loading-text');
+        loading.appendChild(message);
+    }
+
+    function hideLoadingMessage() {
+        let removeLoading = document.querySelector('h2');
+        removeLoading.parentElement.removeChild(removeLoading);
     }
 
     return {

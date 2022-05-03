@@ -32,6 +32,21 @@ ul {
     transition-duration: 0.3s;
 }
 
+.loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-text {
+    font-size: 30px;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    opacity: 0.9;
+}
+
 @media all and (min-width: 800px) and (max-width: 1000px) {
 	.list {
         width: 45%;
@@ -53,5 +68,9 @@ ul {
 @media all and (max-width: 500px) {
 	.list {
         width: 75%;
+    }
+    .loading-text {
+        font-size: 20px;
+        padding: 8x;
     }
 }
