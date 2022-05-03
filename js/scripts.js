@@ -1,56 +1,11 @@
 
 let pokemonRepository = (function () {
-    let pokemonList = [
-        {
-            name: 'Bulbasaur',
-            height: 0.7,
-            type: ['grass', 'poison']
-        },
-        {
-            name: 'Ivysaur',
-            height: 1,
-            type: ['grass', 'poison']
-        },
-        {
-            name: 'Venusaur',
-            height: 2,
-            type: ['grass', 'poison']
-        },
-        {
-            name: 'Charmander',
-            height: 0.6,
-            type: ['fire']
-        },
-        {
-            name: 'Charmeleon',
-            height: 1.1,
-            type: ['fire']
-        },
-        {
-            name: 'Charizard',
-            height: 1.7,
-            type: ['fire', 'flying']
-        },
-        {
-            name: 'Squirtle',
-            height: 0.5,
-            type: ['water']
-        },
-        {
-            name: 'Wartortle',
-            height: 1,
-            type: ['water']
-        },
-        {
-            name: 'Blastoise',
-            height: 1.6,
-            type: ['water']
-        }
-    ];
+    let pokemonList = [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
 //validates that the new pokemon is an object and at least has matching keys before adding it to the list
     function add(pokemon) {
-        if (typeof pokemon === 'object' && 'name' in pokemon && 'height' in pokemon && 'type' in pokemon) {
+        if (typeof pokemon === 'object' && 'name' in pokemon) {
             pokemonList.push(pokemon);
         } else {
             console.log('Incorrect entry format.');
@@ -75,21 +30,55 @@ let pokemonRepository = (function () {
     }
 
     function showDetails(pokemon) {
-        console.log(pokemon);
+        loadDetails(pokemon).then(function () {
+            console.log(pokemon);
+        });
+    }
+
+    function loadList() {
+        return fetch(apiUrl).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            json.results.forEach(function (item) {
+                let pokemon = {
+                    name: item.name,
+                    detailsUrl: item.url
+                };
+                add(pokemon);
+            });
+        }).catch(function (e) {
+            console.error(e);
+        })
+    }
+
+    function loadDetails(item) {
+        let url = item.detailsUrl;
+        return fetch(url).then(function (response) {
+            return response.json();
+        }).then(function (details) {
+            item.imageUrl = details.sprites.front_default;
+            item.height = details.height;
+            item.types = details.types;
+        }).catch(function (e) {
+            console.error(e);
+        });
     }
 
     return {
         add: add,
         getAll: getAll,
-        addListItem: addListItem
+        addListItem: addListItem,
+        loadList: loadList,
+        loadDetails: loadDetails,
+        showDetails: showDetails
     };
 })();
 
 //tested the add function using the following line:
 //pokemonRepository.add({name: 'Caterpie', height: 0.3, type: ['bug']});
 
-
-//lists out pokemon with their heights, adds line breaks between, and highlights a big pokemon
-pokemonRepository.getAll().forEach(function(pokemon) {
-    pokemonRepository.addListItem(pokemon);
+pokemonRepository.loadList().then(function() {
+    pokemonRepository.getAll().forEach(function(pokemon) {
+        pokemonRepository.addListItem(pokemon);
+    });
 });
