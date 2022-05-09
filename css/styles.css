@@ -45,6 +45,55 @@ ul {
     padding: 20px;
     border: 1px solid black;
     opacity: 0.9;
+    z-index: 999;
+}
+
+#modal-container {
+    position: fixed;
+    padding: 20px;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    overflow: auto;
+    display: none;
+}
+
+#modal-container.is-visible {
+    display: grid;
+    text-align: center;
+}
+
+.modal {
+    margin: auto;
+    display: inline-block;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    line-height: 0.8;
+}
+
+.modal-close {
+    float: right;
+    -webkit-appearance: none;
+    border: 0;
+    background: none;
+    color: #777;
+    text-decoration: underline;
+}
+
+.modal h1 {
+    font-size: 32px;
+}
+
+.modal p {
+    font-size: 18px;
 }
 
 @media all and (min-width: 800px) and (max-width: 1000px) {
