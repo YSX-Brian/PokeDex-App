@@ -21,8 +21,12 @@ let pokemonRepository = (function () {
         let pokeList = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
         let button = document.createElement('button');
+        listItem.classList.add('list-group-item');
         button.innerText = capitalizeFirstLetter(pokemon.name);
-        button.classList.add('selection');
+        button.classList.add('btn');
+        button.classList.add('btn-outline-success');
+        button.setAttribute('data-target', '#poke-modal');
+        button.setAttribute('data-toggle', 'modal');
         button.addEventListener('click', function() {
             showDetails(pokemon);
         });
@@ -37,11 +41,9 @@ let pokemonRepository = (function () {
     }
 
     function loadList() {
-        showLoadingMessage();
         return fetch(apiUrl).then(function (response) {
             return response.json();
         }).then(function (json) {
-            hideLoadingMessage();
             json.results.forEach(function (item) {
                 let pokemon = {
                     name: item.name,
@@ -50,16 +52,13 @@ let pokemonRepository = (function () {
                 add(pokemon);
             });
         }).catch(function (e) {
-            hideLoadingMessage();
             console.error(e);
         })
     }
 
     function loadDetails(item) {
-        showLoadingMessage();
         let url = item.detailsUrl;
         return fetch(url).then(function (response) {
-            hideLoadingMessage();
             return response.json();
         }).then(function (details) {
             item.imageUrl = details.sprites.front_default;
@@ -67,33 +66,17 @@ let pokemonRepository = (function () {
             item.types = details.types;
             item.weight = details.weight;
         }).catch(function (e) {
-            hideLoadingMessage();
             console.error(e);
         });
     }
 
-    function showLoadingMessage() {
-        let loading = document.querySelector('.loading');
-        let message = document.createElement('h2')
-        message.innerText = 'Loading...';
-        message.classList.add('loading-text');
-        loading.appendChild(message);
-    }
-
-    function hideLoadingMessage() {
-        let removeLoading = document.querySelector('h2');
-        removeLoading.parentElement.removeChild(removeLoading);
-    }
-
     function showModal(title, height, weight, types, image) {
-        let modalContainer = document.querySelector('#modal-container');
-        modalContainer.innerHTML = '';
+        let modalTitle = document.querySelector('.modal-title');
+        modalTitle.innerText = '';
+        let modalBody = document.querySelector('.modal-body');
+        modalBody.innerHTML = '';
 
-        let modal = document.createElement('div');
-        modal.classList.add('modal');
-
-        let titleElement = document.createElement('h1');
-        titleElement.innerText = title;
+        modalTitle.innerText = title;
 
         let imageElement = document.createElement('img');
         imageElement.src = image;
@@ -113,48 +96,15 @@ let pokemonRepository = (function () {
         let contentElement = document.createElement('p');
         contentElement.innerText = 'Height: ' + height/10 + 'm';
 
-        let closeButtonElement = document.createElement('button');
-        closeButtonElement.classList.add('modal-close');
-        closeButtonElement.innerText = 'Close';
-        closeButtonElement.addEventListener('click', hideModal);
-
-        modal.appendChild(closeButtonElement);
-        modal.appendChild(titleElement);
-        modal.appendChild(imageElement);
-        modal.appendChild(typesElement);
-        modal.appendChild(contentElement);
-        modal.appendChild(weightElement);
-        modalContainer.appendChild(modal);
-
-        modalContainer.classList.add('is-visible');
-    }
-
-    function hideModal () {
-        let modalContainer = document.querySelector('#modal-container');
-        modalContainer.classList.remove('is-visible');
+        modalBody.appendChild(imageElement);
+        modalBody.appendChild(typesElement);
+        modalBody.appendChild(contentElement);
+        modalBody.appendChild(weightElement);
     }
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-
-
-    window.addEventListener('keydown', (e) => {
-        let modalContainer = document.querySelector('#modal-container');
-        if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-            hideModal();
-        }
-    });
-
-
-    modalContainer.addEventListener('click', (e) => {
-        let target = e.target;
-        if (target === modalContainer) {
-           hideModal();
-        }
-    });
-
-
 
     return {
         add: add,
