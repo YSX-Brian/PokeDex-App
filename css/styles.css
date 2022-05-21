@@ -9,6 +9,7 @@ nav {
 
 .pokelogo {
     margin-top: 90px;
+    margin-bottom: 10px;
 }
 
 .list {
@@ -17,7 +18,7 @@ nav {
 }
 
 .list li {
-    border: none;
+    border: 1px solid black;
 }
 
 .modal p {
