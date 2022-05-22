@@ -21,10 +21,10 @@ let pokemonRepository = (function () {
         let pokeList = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
         let button = document.createElement('button');
-        listItem.classList.add('list-group-item');
+        listItem.classList.add('list-inline-item');
         button.innerText = capitalizeFirstLetter(pokemon.name);
         button.classList.add('btn');
-        button.classList.add('btn-outline-success');
+        button.classList.add('btn-outline-dark');
         button.setAttribute('data-target', '#poke-modal');
         button.setAttribute('data-toggle', 'modal');
         button.addEventListener('click', function() {
@@ -36,7 +36,8 @@ let pokemonRepository = (function () {
 
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function () {
-            showModal(capitalizeFirstLetter(pokemon.name), pokemon.height,pokemon.weight, pokemon.types, pokemon.imageUrl)
+            showModal(capitalizeFirstLetter(pokemon.name),
+            pokemon.height,pokemon.weight, pokemon.types, pokemon.imageUrl, pokemon.otherImageUrl)
         });
     }
 
@@ -62,6 +63,7 @@ let pokemonRepository = (function () {
             return response.json();
         }).then(function (details) {
             item.imageUrl = details.sprites.front_default;
+            item.otherImageUrl = details.sprites.back_default;
             item.height = details.height;
             item.types = details.types;
             item.weight = details.weight;
@@ -70,7 +72,7 @@ let pokemonRepository = (function () {
         });
     }
 
-    function showModal(title, height, weight, types, image) {
+    function showModal(title, height, weight, types, image, otherImage) {
         let modalTitle = document.querySelector('.modal-title');
         modalTitle.innerText = '';
         let modalBody = document.querySelector('.modal-body');
@@ -80,6 +82,9 @@ let pokemonRepository = (function () {
 
         let imageElement = document.createElement('img');
         imageElement.src = image;
+
+        let otherImageElement = document.createElement('img');
+        otherImageElement.src = otherImage;
 
         //If the pokemon has 2 types, prints both. Otherwise only prints the 1.
         let typesElement = document.createElement('p');
@@ -97,6 +102,7 @@ let pokemonRepository = (function () {
         contentElement.innerText = 'Height: ' + height/10 + 'm';
 
         modalBody.appendChild(imageElement);
+        modalBody.appendChild(otherImageElement);
         modalBody.appendChild(typesElement);
         modalBody.appendChild(contentElement);
         modalBody.appendChild(weightElement);
@@ -105,6 +111,16 @@ let pokemonRepository = (function () {
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+
+    $(document).ready(function () {
+      $("#anythingSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myDIV *").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+
 
     return {
         add: add,
@@ -115,9 +131,6 @@ let pokemonRepository = (function () {
         showDetails: showDetails
     };
 })();
-
-//tested the add function using the following line:
-//pokemonRepository.add({name: 'Caterpie', height: 0.3, type: ['bug']});
 
 pokemonRepository.loadList().then(function() {
     pokemonRepository.getAll().forEach(function(pokemon) {
