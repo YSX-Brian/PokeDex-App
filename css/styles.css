@@ -1,24 +1,30 @@
 body {
-	font-size: 14px;
     text-align: center;
 }
 
-nav {
-    background-color: white;
+.pokelogo {
+    margin-top: 80px;
 }
 
-.pokelogo {
-    margin-top: 90px;
-    margin-bottom: 10px;
+#pikawave {
+    margin-bottom: 20px;
+}
+
+.about-heading {
+    margin: 14px auto;
 }
 
 .list {
-    width: 35%;
     margin: 0px auto;
 }
 
 .list li {
-    border: 1px solid black;
+    margin: 6px;
+    width: 25%;
+}
+
+.list button {
+    width: 100%;
 }
 
 .modal p {
@@ -26,30 +32,29 @@ nav {
     line-height: 0.7;
 }
 
-@media all and (min-width: 800px) and (max-width: 1000px) {
-	.list {
-        width: 45%;
-    }
+nav a p {
+    display: inline;
 }
 
-@media all and (min-width: 600px) and (max-width: 800px) {
-	.list {
-        width: 55%;
+@media all and (max-width: 650px) {
+    .pokelogo {
+        width: 200px;
+        height: 73.5px;
     }
-}
-
-@media all and (min-width: 400px) and (max-width: 600px) {
-	.list {
-        width: 65%;
+    .about-heading {
+        font-size: 12px;
     }
-}
-
-@media all and (max-width: 500px) {
-	.list {
-        width: 75%;
+    .pokemon-list li button {
+        font-size: 12px;
     }
-    .loading-text {
-        font-size: 20px;
-        padding: 8x;
+    .list li {
+        margin: 6px;
+        width: 40%;
+    }
+    #anythingSearch {
+        width: 80px;
+    }
+    #cut {
+        display: none;
     }
 }

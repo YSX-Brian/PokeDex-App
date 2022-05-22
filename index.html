@@ -13,32 +13,25 @@
         <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
     <body>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar fixed-top navbar-dark bg-dark">
 		    <a class="navbar-brand" href="#">
                 <img src="img/pokedex.png" class="rounded" width="50" height="41.25" alt="pokedex">
-                PokéDex
+                <p class="app-name">PokéDex <span id="cut">App</span><p>
             </a>
-		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="#">PokeAPI</a>
-                </div>
-                <form class="form-inline">
-                     <input type="search" id="form1" class="form-control" placeholder="Type query" aria-label="Search" />
-                </form>
-            </div>
+            <form class="form-inline ml-auto">
+                <input class="form-control" id="anythingSearch" type="text" placeholder="Search PokéDex">
+            </form>
         </nav>
 
         <main>
             <img src="img/pokelogo.png" class="pokelogo" width="400" height="147" alt="pokemon-logo">
-            <div class="container-fluid"
-                <div class="list">
-                    <ul class="pokemon-list list-group"></ul>
-                </div>
+            <h5 class="about-heading">A PokéDex powered by <a href="https://pokeapi.co/" target="_blank">PokéAPI</a>. <br>
+                Click on any of the following Gen. 1 Pokémon to learn more!
+            </h5>
+            <div class="list" id="myDIV">
+                <ul class="pokemon-list list-inline"></ul>
             </div>
+            <img src="img/pikawave.gif" id ="pikawave" class="rounded" width="100" height="100" alt="waving-gif">
 
             <div class="modal fade" id="poke-modal" tabindex="-1" role="dialog" aria-labelledby="poke-modalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
