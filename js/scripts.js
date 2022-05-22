@@ -37,7 +37,7 @@ let pokemonRepository = (function () {
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function () {
             showModal(capitalizeFirstLetter(pokemon.name),
-            pokemon.height,pokemon.weight, pokemon.types, pokemon.imageUrl, pokemon.otherImageUrl)
+            pokemon.height,pokemon.weight, pokemon.types, pokemon.imageUrl, pokemon.otherImageUrl, pokemon.number)
         });
     }
 
@@ -67,18 +67,19 @@ let pokemonRepository = (function () {
             item.height = details.height;
             item.types = details.types;
             item.weight = details.weight;
+            item.number = details.id;
         }).catch(function (e) {
             console.error(e);
         });
     }
 
-    function showModal(title, height, weight, types, image, otherImage) {
+    function showModal(title, height, weight, types, image, otherImage, number) {
         let modalTitle = document.querySelector('.modal-title');
         modalTitle.innerText = '';
         let modalBody = document.querySelector('.modal-body');
         modalBody.innerHTML = '';
 
-        modalTitle.innerText = title;
+        modalTitle.innerText = '#' + number + ' ' + title;
 
         let imageElement = document.createElement('img');
         imageElement.src = image;
