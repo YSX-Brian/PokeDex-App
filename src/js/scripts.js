@@ -2,9 +2,8 @@
 let pokemonRepository = (function () {
     let pokemonList = [];
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-    let modalContainer = document.querySelector('#modal-container');
 
-//validates that the new pokemon is an object and at least has matching keys before adding it to the list
+//validates that the new pokemon is an object and at least has a matching key before adding it to the list
     function add(pokemon) {
         if (typeof pokemon === 'object' && 'name' in pokemon) {
             pokemonList.push(pokemon);
@@ -113,14 +112,16 @@ let pokemonRepository = (function () {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+/* eslint-disable no-undef */
     $(document).ready(function () {
-      $("#anythingSearch").on("keyup", function () {
+      $('#anythingSearch').on('keyup', function () {
         var value = $(this).val().toLowerCase();
-        $("#myDIV *").filter(function () {
+        $('#myDIV *').filter(function () {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
       });
     });
+/* eslint-disable no-undef */
 
 
     return {
