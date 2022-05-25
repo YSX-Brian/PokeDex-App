@@ -1,5 +1,6 @@
 body {
     text-align: center;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .pokelogo {
@@ -53,8 +54,5 @@ nav a p {
     }
     #anythingSearch {
         width: 80px;
-    }
-    #cut {
-        display: none;
     }
 }
