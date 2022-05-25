@@ -8,10 +8,10 @@ Information on the first 150 Pokemon can be accessed.
 Visit the website here: https://megidolaonn.github.io/PokeDex-App/
 
 ### Languages/Libraries used:
-HTML
-CSS
-JavaScript
-JQuery 3.5.1
+HTML  
+CSS  
+JavaScript  
+JQuery 3.5.1  
 Bootstrap 4.2
 
 ### To get the project running:
