@@ -7,6 +7,14 @@ Information on the first 150 Pokemon can be accessed.
 
 Visit the website here: https://megidolaonn.github.io/PokeDex-App/
 
+Main Page:     
+
+![poke-main](img/poke-main.png)
+
+Modal View:  
+
+![poke-modal](img/poke-modal.png)
+
 ### Languages/Libraries used:
 HTML  
 CSS  
