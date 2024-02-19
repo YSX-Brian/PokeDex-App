@@ -1,7 +1,7 @@
 
 let pokemonRepository = (function () {
     let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=251';
 
 //validates that the new pokemon is an object and at least has a matching key before adding it to the list
     function add(pokemon) {
@@ -28,6 +28,7 @@ let pokemonRepository = (function () {
         button.setAttribute('data-toggle', 'modal');
         button.addEventListener('click', function() {
             showDetails(pokemon);
+            console.log(pokemon);
         });
         listItem.appendChild(button);
         pokeList.appendChild(listItem);
@@ -35,8 +36,7 @@ let pokemonRepository = (function () {
 
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function () {
-            showModal(capitalizeFirstLetter(pokemon.name),
-            pokemon.height,pokemon.weight, pokemon.types, pokemon.imageUrl, pokemon.otherImageUrl, pokemon.number)
+            showModal(pokemon);
         });
     }
 
@@ -67,45 +67,59 @@ let pokemonRepository = (function () {
             item.types = details.types;
             item.weight = details.weight;
             item.number = details.id;
+            item.frontShiny = details.sprites.front_shiny;
+            item.backShiny = details.sprites.back_shiny;
         }).catch(function (e) {
             console.error(e);
         });
     }
-
-    function showModal(title, height, weight, types, image, otherImage, number) {
+  
+    function showModal(pokemon) {
         let modalTitle = document.querySelector('.modal-title');
         modalTitle.innerText = '';
         let modalBody = document.querySelector('.modal-body');
         modalBody.innerHTML = '';
+        let generationInfo = pokemon.number > 150 ? 'Gen. 2' : 'Gen. 1';
 
-        modalTitle.innerText = '#' + number + ' ' + title;
+        modalTitle.innerText = `# ${pokemon.number} ${capitalizeFirstLetter(pokemon.name)}`;
 
         let imageElement = document.createElement('img');
-        imageElement.src = image;
+        imageElement.src = pokemon.imageUrl;
 
         let otherImageElement = document.createElement('img');
-        otherImageElement.src = otherImage;
+        otherImageElement.src = pokemon.otherImageUrl;
 
-        //If the pokemon has 2 types, prints both. Otherwise only prints the 1.
         let typesElement = document.createElement('p');
-        if(types[1]) {
+        if(pokemon.types[1]) {
             typesElement.innerText =
-            'Types: ' + capitalizeFirstLetter(types[0].type.name) + ', ' + capitalizeFirstLetter(types[1].type.name);
+            'Types: ' + capitalizeFirstLetter(pokemon.types[0].type.name) + ', ' + capitalizeFirstLetter(pokemon.types[1].type.name);
         } else {
-            typesElement.innerText = 'Type: ' + capitalizeFirstLetter(types[0].type.name);
+            typesElement.innerText = 'Type: ' + capitalizeFirstLetter(pokemon.types[0].type.name);
         }
 
+        let generationElement = document.createElement('p');
+        generationElement.innerText = generationInfo;
+
         let weightElement = document.createElement('p');
-        weightElement.innerText = 'Weight: ' + weight/10 + 'kg';
+        weightElement.innerText = 'Weight: ' + pokemon.weight/10 + 'kg';
 
         let contentElement = document.createElement('p');
-        contentElement.innerText = 'Height: ' + height/10 + 'm';
+        contentElement.innerText = 'Height: ' + pokemon.height/10 + 'm';
+
+        let shinyImageElement = document.createElement('img');
+        shinyImageElement.src = pokemon.frontShiny;
+
+        let backShinyImageElement = document.createElement('img');
+        backShinyImageElement.src = pokemon.backShiny;
 
         modalBody.appendChild(imageElement);
         modalBody.appendChild(otherImageElement);
+        modalBody.appendChild(generationElement);
         modalBody.appendChild(typesElement);
         modalBody.appendChild(contentElement);
         modalBody.appendChild(weightElement);
+        modalBody.appendChild(shinyImageElement);
+        modalBody.appendChild(backShinyImageElement);
     }
 
     function capitalizeFirstLetter(string) {
