@@ -3,7 +3,7 @@
 ### About:
 A PokeDex application that loads data from an external API (PokeAPI).
 The site displays buttons which when clicked, open a modal with details on the selected Pokemon.
-Information on the first 150 Pokemon can be accessed.
+Information on the first 251 Pokemon can be accessed.
 
 Visit the website here: https://ysx-brian.github.io/PokeDex-App/
 
